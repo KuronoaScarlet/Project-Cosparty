@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "699139277877",
+    "project_id": "e-mate-ce892",
+    "storage_bucket": "e-mate-ce892.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:699139277877:android:a0330d359e08b088c89d7c",
+        "android_client_info": {
+          "package_name": "com.example.emate"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "699139277877-6vdl7hpetfjdqmi586ed79sk4u3suqib.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDCIDNV41-wN3_7-pQOhe1VcjDx2-qwQIA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "699139277877-6vdl7hpetfjdqmi586ed79sk4u3suqib.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
