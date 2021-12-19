@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class mainscreen extends StatefulWidget {
-  const mainscreen({
+class MainScreen extends StatefulWidget {
+  const MainScreen({
     Key? key,
   }) : super(key: key);
 
   @override
-  State<mainscreen> createState() => _mainscreen();
+  State<MainScreen> createState() => _MainScreen();
 }
 
-class _mainscreen extends State<mainscreen> {
+class _MainScreen extends State<MainScreen> {
   String? username;
   final db = FirebaseFirestore.instance;
   late TextEditingController controller;
@@ -32,29 +31,65 @@ class _mainscreen extends State<mainscreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: StreamBuilder(
-          stream: db.doc("/test/QGzrvOClb2GssLjfGStI").snapshots(),
-          builder: (
-            BuildContext context,
-            AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>> snapshot,
-          ) {
-            if (!snapshot.hasData) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-            final doc = snapshot.data!.data();
-            if (doc != null) {
-              return Center(
-                  child: Text(
-                doc['text'],
-                style: TextStyle(color: Colors.red),
-              ));
-            } else {
-              return const Center(
-                  child:
-                      Text("doc id null", style: TextStyle(color: Colors.red)));
-            }
-          }),
+        stream: db.doc("/profile/QDRSrYK1Z5iB09FOCcxV").snapshots(),
+        builder: (
+          BuildContext context,
+          AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>> snapshot,
+        ) {
+          if (!snapshot.hasData) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          final doc = snapshot.data!.data();
+          if (doc != null) {
+            List<dynamic> game1 = doc['game1'];
+            return Center(
+              child: Column(
+                children: [
+                  Text(
+                    doc['username'],
+                    style: const TextStyle(
+                      color: Colors.red,
+                      fontSize: 40,
+                    ),
+                  ),
+                  Text(
+                    doc['language1'],
+                    style: const TextStyle(
+                      color: Colors.red,
+                      fontSize: 40,
+                    ),
+                  ),
+                  Text(
+                    doc['language2'],
+                    style: const TextStyle(
+                      color: Colors.red,
+                      fontSize: 40,
+                    ),
+                  ),
+                  Text(
+                    game1[1].toString(),
+                    style: const TextStyle(
+                      color: Colors.red,
+                      fontSize: 40,
+                    ),
+                  ),
+                ],
+              ),
+            );
+          } else {
+            return const Center(
+              child: Text(
+                "doc id null",
+                style: TextStyle(
+                  color: Colors.red,
+                ),
+              ),
+            );
+          }
+        },
+      ),
     );
   }
 }
