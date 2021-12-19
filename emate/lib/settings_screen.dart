@@ -1,15 +1,19 @@
-import 'package:emate/mainscreen.dart';
+import 'package:emate/profile_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:emate/widgets/clickable_icon.dart';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class InboxScreen extends StatefulWidget {
-  const InboxScreen({Key? key}) : super(key: key);
+class SettingsScreen extends StatefulWidget {
+  const SettingsScreen({
+    Key? key,
+  }) : super(key: key);
 
   @override
-  _InboxScreenState createState() => _InboxScreenState();
+  _SettingsScreenState createState() => _SettingsScreenState();
 }
 
-class _InboxScreenState extends State<InboxScreen> {
+class _SettingsScreenState extends State<SettingsScreen> {
   final db = FirebaseFirestore.instance;
   late TextEditingController controller;
 
@@ -46,34 +50,32 @@ class _InboxScreenState extends State<InboxScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                  const Text(
-                    "E-Mate",
-                    style: TextStyle(fontSize: 20),
-                  ),
-                  const Text(
-                    "Inbox Screen",
-                    style: TextStyle(fontSize: 20),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => const MainScreen(),
+                  Row(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => const ProfileScreen(),
+                            ),
+                          );
+                        },
+                        child: const ClickableIcon(
+                          icon: Icons.arrow_back,
+                          size: 35,
+                          shapeColor: Colors.white10,
+                          iconColor: Colors.grey,
                         ),
-                      );
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.all(15),
-                      decoration: BoxDecoration(
-                        color: Colors.grey.shade500,
-                        shape: BoxShape.circle,
                       ),
-                      child: const Icon(
-                        Icons.arrow_back,
-                        size: 90,
-                        color: Colors.white,
+                      const Text(
+                        "                     E-Mate",
+                        style: TextStyle(fontSize: 20),
                       ),
-                    ),
+                    ],
+                  ),
+                  const Text(
+                    "Settings Screen",
+                    style: TextStyle(fontSize: 20),
                   ),
                 ],
               ),
