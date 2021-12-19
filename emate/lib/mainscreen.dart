@@ -1,5 +1,9 @@
+import 'package:emate/profilescreen.dart';
+import 'package:emate/searchscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+
+import 'inboxscreen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({
@@ -11,7 +15,6 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreen extends State<MainScreen> {
-  String? username;
   final db = FirebaseFirestore.instance;
   late TextEditingController controller;
 
@@ -29,9 +32,10 @@ class _MainScreen extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
+    bool connected = true;
     return Scaffold(
       body: StreamBuilder(
-        stream: db.doc("/profile/QDRSrYK1Z5iB09FOCcxV").snapshots(),
+        stream: db.doc("/user1/GdZ30bm3hotRFyDU7GSZ").snapshots(),
         builder: (
           BuildContext context,
           AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>> snapshot,
@@ -43,36 +47,75 @@ class _MainScreen extends State<MainScreen> {
           }
           final doc = snapshot.data!.data();
           if (doc != null) {
-            List<dynamic> game1 = doc['game1'];
             return Center(
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisSize: MainAxisSize.max,
                 children: [
-                  Text(
-                    doc['username'],
-                    style: const TextStyle(
-                      color: Colors.red,
-                      fontSize: 40,
+                  const Text(
+                    "E-Mate",
+                    style: TextStyle(fontSize: 20),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => const ProfileScreen(),
+                            ),
+                          );
+                        },
+                        child: ClickableIcon(
+                          icon: Icons.person,
+                          size: 90,
+                          shapeColor: Colors.grey.shade500,
+                          iconColor: Colors.white,
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => const InboxScreen(),
+                            ),
+                          );
+                        },
+                        child: ClickableIcon(
+                          icon: Icons.inbox,
+                          size: 90,
+                          shapeColor: Colors.grey.shade500,
+                          iconColor: Colors.white,
+                        ),
+                      ),
+                    ],
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const SearchScreen(),
+                        ),
+                      );
+                    },
+                    child: ClickableIcon(
+                      icon: Icons.search_outlined,
+                      size: 180,
+                      shapeColor: Colors.blue.shade500,
+                      iconColor: Colors.white,
                     ),
                   ),
-                  Text(
-                    doc['language1'],
-                    style: const TextStyle(
-                      color: Colors.red,
-                      fontSize: 40,
-                    ),
-                  ),
-                  Text(
-                    doc['language2'],
-                    style: const TextStyle(
-                      color: Colors.red,
-                      fontSize: 40,
-                    ),
-                  ),
-                  Text(
-                    game1[1].toString(),
-                    style: const TextStyle(
-                      color: Colors.red,
-                      fontSize: 40,
+                  GestureDetector(
+                    onTap: () {
+                      connected = false;
+                    },
+                    child: ClickableIcon(
+                      icon: Icons.remove_red_eye_sharp,
+                      size: 80,
+                      shapeColor: Colors.white10,
+                      iconColor: connected ? Colors.green : Colors.red,
                     ),
                   ),
                 ],
@@ -89,6 +132,37 @@ class _MainScreen extends State<MainScreen> {
             );
           }
         },
+      ),
+    );
+  }
+}
+
+class ClickableIcon extends StatelessWidget {
+  final IconData icon;
+  final double size;
+  final Color shapeColor;
+  final Color iconColor;
+
+  const ClickableIcon({
+    Key? key,
+    required this.icon,
+    required this.size,
+    required this.shapeColor,
+    required this.iconColor,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(15),
+      decoration: BoxDecoration(
+        color: shapeColor,
+        shape: BoxShape.circle,
+      ),
+      child: Icon(
+        icon,
+        size: size,
+        color: iconColor,
       ),
     );
   }
