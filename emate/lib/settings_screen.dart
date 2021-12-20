@@ -148,11 +148,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   //aqui hacer un for, preguntar al ignasi hehe :P
                                   Row(
                                     children: [
-                                      //button
                                       Checkbox(value: doc["a"],onChanged: (bool? value){
                                         setState(() {
-                                          doc.update("a", (value) => !doc["a"]);
-                                          //isCheckedLol = value!;
+                                          db
+                                            .doc("/user1/GdZ30bm3hotRFyDU7GSZ")
+                                            .update({"a":!doc["a"]});
                                         });
                                       }),
                                       Text("League of Legends\n\n"),
@@ -174,10 +174,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   //aqui hacer un for, preguntar al ignasi hehe :P
                                   Row(
                                     children:[
-                                      //hace falta cambiar el bool en el firebase
-                                      Checkbox(value: doc["a"],onChanged: (bool? value){
+                                      Checkbox(value: doc["b"],onChanged: (bool? value){
                                         setState(() {
-                                          doc["a"] = value!;
+                                          db
+                                            .doc("/user1/GdZ30bm3hotRFyDU7GSZ")
+                                            .update({"b":!doc["b"]});
                                         });
                                       }),
                                       Text("SPANIIIIISH\n"),
