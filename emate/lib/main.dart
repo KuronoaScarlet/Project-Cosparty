@@ -14,6 +14,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(home: MainScreen());
+    String fakeUserID = "oo2FO2sdS0ar0vNq2L53";
+    return MaterialApp(
+      home: MainScreen(
+        userID: fakeUserID,
+      ),
+    );
   }
 }

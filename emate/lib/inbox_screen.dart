@@ -4,7 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class InboxScreen extends StatefulWidget {
-  const InboxScreen({Key? key}) : super(key: key);
+  final String userID;
+  const InboxScreen({
+    Key? key,
+    required this.userID,
+  }) : super(key: key);
 
   @override
   _InboxScreenState createState() => _InboxScreenState();
@@ -30,7 +34,7 @@ class _InboxScreenState extends State<InboxScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: StreamBuilder(
-        stream: db.doc("/user1/GdZ30bm3hotRFyDU7GSZ").snapshots(),
+        stream: db.doc("/users/${widget.userID}").snapshots(),
         builder: (
           BuildContext context,
           AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>> snapshot,
@@ -53,7 +57,9 @@ class _InboxScreenState extends State<InboxScreen> {
                         onTap: () {
                           Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (context) => const MainScreen(),
+                              builder: (context) => MainScreen(
+                                userID: widget.userID,
+                              ),
                             ),
                           );
                         },

@@ -6,8 +6,10 @@ import 'package:emate/widgets/clickable_icon.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ProfileScreen extends StatefulWidget {
+  final String userID;
   const ProfileScreen({
     Key? key,
+    required this.userID,
   }) : super(key: key);
 
   @override
@@ -34,7 +36,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: StreamBuilder(
-        stream: db.doc("/user1/GdZ30bm3hotRFyDU7GSZ").snapshots(),
+        stream: db.doc("/users/${widget.userID}").snapshots(),
         builder: (
           BuildContext context,
           AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>> snapshot,
@@ -57,7 +59,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         onTap: () {
                           Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (context) => const MainScreen(),
+                              builder: (context) => MainScreen(
+                                userID: widget.userID,
+                              ),
                             ),
                           );
                         },
@@ -85,7 +89,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         onTap: () {
                           Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (context) => const SettingsScreen(),
+                              builder: (context) => SettingsScreen(
+                                userID: widget.userID,
+                              ),
                             ),
                           );
                         },
@@ -112,9 +118,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         height: 20,
                       ),
                       Text(
-                        doc["Username"],
-                        //"[User Name]",
-                        style: TextStyle(fontSize: 35),
+                        doc["UserName"],
+                        style: const TextStyle(fontSize: 35),
                       )
                     ],
                   ),

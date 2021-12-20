@@ -4,7 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SearchScreen extends StatefulWidget {
-  const SearchScreen({Key? key}) : super(key: key);
+  final String userID;
+  const SearchScreen({
+    Key? key,
+    required this.userID,
+  }) : super(key: key);
 
   @override
   _SearchScreenState createState() => _SearchScreenState();
@@ -30,7 +34,7 @@ class _SearchScreenState extends State<SearchScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: StreamBuilder(
-        stream: db.doc("/user1/GdZ30bm3hotRFyDU7GSZ").snapshots(),
+        stream: db.doc("/users/${widget.userID}").snapshots(),
         builder: (
           BuildContext context,
           AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>> snapshot,
@@ -53,7 +57,9 @@ class _SearchScreenState extends State<SearchScreen> {
                         onTap: () {
                           Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (context) => const MainScreen(),
+                              builder: (context) => MainScreen(
+                                userID: widget.userID,
+                              ),
                             ),
                           );
                         },

@@ -9,8 +9,10 @@ import 'package:emate/widgets/clickable_icon.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class MainScreen extends StatefulWidget {
+  final String userID;
   const MainScreen({
     Key? key,
+    required this.userID,
   }) : super(key: key);
 
   @override
@@ -34,11 +36,10 @@ class _MainScreen extends State<MainScreen> {
   }
 
   @override
-  late bool a;
   Widget build(BuildContext context) {
     return Scaffold(
       body: StreamBuilder(
-        stream: db.doc("/user1/GdZ30bm3hotRFyDU7GSZ").snapshots(),
+        stream: db.doc("/users/${widget.userID}").snapshots(),
         builder: (
           BuildContext context,
           AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>> snapshot,
@@ -67,7 +68,9 @@ class _MainScreen extends State<MainScreen> {
                         onTap: () {
                           Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (context) => const ProfileScreen(),
+                              builder: (context) => ProfileScreen(
+                                userID: widget.userID,
+                              ),
                             ),
                           );
                         },
@@ -82,7 +85,9 @@ class _MainScreen extends State<MainScreen> {
                         onTap: () {
                           Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (context) => const InboxScreen(),
+                              builder: (context) => InboxScreen(
+                                userID: widget.userID,
+                              ),
                             ),
                           );
                         },
@@ -99,7 +104,9 @@ class _MainScreen extends State<MainScreen> {
                     onTap: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) => const SearchScreen(),
+                          builder: (context) => SearchScreen(
+                            userID: widget.userID,
+                          ),
                         ),
                       );
                     },
@@ -112,16 +119,9 @@ class _MainScreen extends State<MainScreen> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      if (doc['connected'] == true) {
-                        db
-                            .doc("/user1/GdZ30bm3hotRFyDU7GSZ")
-                            .update({'connected': false});
-                      }
-                      if (doc['connected'] == false) {
-                        db
-                            .doc("/user1/GdZ30bm3hotRFyDU7GSZ")
-                            .update({'connected': true});
-                      }
+                      db
+                          .doc("/users/${widget.userID}")
+                          .update({'connected': !doc['connected']});
                     },
                     child: ClickableIcon(
                       icon: doc['connected']

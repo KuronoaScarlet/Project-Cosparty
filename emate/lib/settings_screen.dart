@@ -5,8 +5,10 @@ import 'package:emate/widgets/clickable_icon.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SettingsScreen extends StatefulWidget {
+  final String userID;
   const SettingsScreen({
     Key? key,
+    required this.userID,
   }) : super(key: key);
 
   @override
@@ -36,7 +38,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: StreamBuilder(
-        stream: db.doc("/user1/GdZ30bm3hotRFyDU7GSZ").snapshots(),
+        stream: db.doc("/users/${widget.userID}").snapshots(),
         builder: (
           BuildContext context,
           AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>> snapshot,
@@ -59,7 +61,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         onTap: () {
                           Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (context) => const ProfileScreen(),
+                              builder: (context) => ProfileScreen(
+                                userID: widget.userID,
+                              ),
                             ),
                           );
                         },
@@ -74,7 +78,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         "                     E-Mate",
                         style: TextStyle(fontSize: 20),
                       ),
-                     
                     ],
                   ),
                   Container(
@@ -83,7 +86,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       children: [
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
-                          children:const [
+                          children: const [
                             Text(
                               "Settings\n",
                               style: TextStyle(fontSize: 20),
@@ -91,105 +94,126 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           ],
                         ),
                         Container(
-                        padding: const EdgeInsets.fromLTRB(35, 0, 0, 0),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                const Text("Show lenguage",
-                                style: TextStyle(fontSize: 18),
-                                ),
-                                Switch(value: isCheckedLeng,onChanged: (bool? value){
+                          padding: const EdgeInsets.fromLTRB(35, 0, 0, 0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  const Text(
+                                    "Show lenguage",
+                                    style: TextStyle(fontSize: 18),
+                                  ),
+                                  Switch(
+                                      value: isCheckedLeng,
+                                      onChanged: (bool? value) {
                                         setState(() {
                                           isCheckedLeng = value!;
                                         });
                                       }),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                const Text("Show winrate",
-                                style: TextStyle(fontSize: 18),
-                                ),
-                                Switch(value: isCheckedWinrate,onChanged: (bool? value){
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  const Text(
+                                    "Show winrate",
+                                    style: TextStyle(fontSize: 18),
+                                  ),
+                                  Switch(
+                                      value: isCheckedWinrate,
+                                      onChanged: (bool? value) {
                                         setState(() {
                                           isCheckedWinrate = value!;
                                         });
                                       }),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                const Text("Show other Game Preferences \non serarh\n",
-                                style: TextStyle(fontSize: 18),
-                                ),
-                                Switch(value: isCheckedPreferences,onChanged: (bool? value){
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  const Text(
+                                    "Show other Game Preferences \non serarh\n",
+                                    style: TextStyle(fontSize: 18),
+                                  ),
+                                  Switch(
+                                      value: isCheckedPreferences,
+                                      onChanged: (bool? value) {
                                         setState(() {
                                           isCheckedPreferences = value!;
                                         });
                                       }),
-                              ],
-                            ),
-                            Row(
-                              children: const [
-                                Text("Game Preferences",
-                                style: TextStyle(fontSize: 18),),
-                              ],
-                            ),
-                            Container(
-                              padding: const EdgeInsets.fromLTRB(30, 0, 0, 0),
-                              child: Column(
-                                children: [
-                                  //aqui hacer un for, preguntar al ignasi hehe :P
-                                  Row(
-                                    children: [
-                                      Checkbox(value: doc["a"],onChanged: (bool? value){
-                                        setState(() {
-                                          db
-                                            .doc("/user1/GdZ30bm3hotRFyDU7GSZ")
-                                            .update({"a":!doc["a"]});
-                                        });
-                                      }),
-                                      Text("League of Legends\n\n"),
-                                    ],
+                                ],
+                              ),
+                              Row(
+                                children: const [
+                                  Text(
+                                    "Game Preferences",
+                                    style: TextStyle(fontSize: 18),
                                   ),
                                 ],
                               ),
-                            ),
-                            Row(
-                              children: const [
-                                Text("Lenguages",
-                                style: TextStyle(fontSize: 18),),
-                              ],
-                            ),
-                            Container(
-                              padding: const EdgeInsets.fromLTRB(30, 0, 0, 0),
-                              child: Column(
-                                children: [
-                                  //aqui hacer un for, preguntar al ignasi hehe :P
-                                  Row(
-                                    children:[
-                                      Checkbox(value: doc["b"],onChanged: (bool? value){
-                                        setState(() {
-                                          db
-                                            .doc("/user1/GdZ30bm3hotRFyDU7GSZ")
-                                            .update({"b":!doc["b"]});
-                                        });
-                                      }),
-                                      Text("SPANIIIIISH\n"),
-                                    ],
+                              Container(
+                                padding: const EdgeInsets.fromLTRB(30, 0, 0, 0),
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Checkbox(
+                                            value: doc["a"],
+                                            onChanged: (bool? value) {
+                                              setState(() {
+                                                db
+                                                    .doc(
+                                                        "/user1/GdZ30bm3hotRFyDU7GSZ")
+                                                    .update({"a": !doc["a"]});
+                                              });
+                                            }),
+                                        const Text("League of Legends\n\n"),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Row(
+                                children: const [
+                                  Text(
+                                    "Lenguages",
+                                    style: TextStyle(fontSize: 18),
                                   ),
                                 ],
                               ),
-                            )
-                          ],
-                        ),
-                      )
+                              Container(
+                                padding: const EdgeInsets.fromLTRB(30, 0, 0, 0),
+                                child: Column(
+                                  children: [
+                                    //aqui hacer un for, preguntar al ignasi hehe :P
+                                    Row(
+                                      children: [
+                                        Checkbox(
+                                            value: doc["b"],
+                                            onChanged: (bool? value) {
+                                              setState(() {
+                                                db
+                                                    .doc(
+                                                        "/user1/GdZ30bm3hotRFyDU7GSZ")
+                                                    .update({"b": !doc["b"]});
+                                              });
+                                            }),
+                                        const Text("SPANIIIIISH\n"),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
+                        )
                       ],
                     ),
                   ),
