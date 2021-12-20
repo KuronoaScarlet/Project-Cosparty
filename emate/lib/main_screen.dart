@@ -34,6 +34,7 @@ class _MainScreen extends State<MainScreen> {
   }
 
   @override
+  late bool a;
   Widget build(BuildContext context) {
     return Scaffold(
       body: StreamBuilder(
@@ -115,7 +116,7 @@ class _MainScreen extends State<MainScreen> {
                       doc['connected'] = !doc['connected'];
                     */
                     onTap: () {
-                      doc.update('connected', (value) => !doc['connected']);
+                        doc.update('connected', (value) => !doc['connected']); // -> value es nulo, no lo cambias en ningun momento. (posiblemente)
                     },
                     child: ClickableIcon(
                       icon: doc['connected']

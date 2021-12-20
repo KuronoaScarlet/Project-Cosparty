@@ -101,18 +101,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     mainAxisSize: MainAxisSize.max,
-                    children: const [
-                      ClickableIcon(
+                    children: [
+                      const ClickableIcon(
                         icon: Icons.person,
                         size: 175,
                         shapeColor: Colors.grey,
                         iconColor: Colors.white,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       Text(
-                        "[User Name]",
+                        doc["Username"],
+                        //"[User Name]",
                         style: TextStyle(fontSize: 35),
                       )
                     ],

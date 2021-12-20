@@ -16,6 +16,9 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen> {
   final db = FirebaseFirestore.instance;
   late TextEditingController controller;
+  bool isCheckedLeng = false;
+  bool isCheckedWinrate = false;
+  bool isCheckedPreferences = false;
 
   @override
   void initState() {
@@ -47,7 +50,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           if (doc != null) {
             return Center(
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.start,
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   Row(
@@ -71,11 +74,123 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         "                     E-Mate",
                         style: TextStyle(fontSize: 20),
                       ),
+                     
                     ],
                   ),
-                  const Text(
-                    "Settings Screen",
-                    style: TextStyle(fontSize: 20),
+                  Container(
+                    padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children:const [
+                            Text(
+                              "Settings\n",
+                              style: TextStyle(fontSize: 20),
+                            ),
+                          ],
+                        ),
+                        Container(
+                        padding: const EdgeInsets.fromLTRB(35, 0, 0, 0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                const Text("Show lenguage",
+                                style: TextStyle(fontSize: 18),
+                                ),
+                                Switch(value: isCheckedLeng,onChanged: (bool? value){
+                                        setState(() {
+                                          isCheckedLeng = value!;
+                                        });
+                                      }),
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                const Text("Show winrate",
+                                style: TextStyle(fontSize: 18),
+                                ),
+                                Switch(value: isCheckedWinrate,onChanged: (bool? value){
+                                        setState(() {
+                                          isCheckedWinrate = value!;
+                                        });
+                                      }),
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                const Text("Show other Game Preferences \non serarh\n",
+                                style: TextStyle(fontSize: 18),
+                                ),
+                                Switch(value: isCheckedPreferences,onChanged: (bool? value){
+                                        setState(() {
+                                          isCheckedPreferences = value!;
+                                        });
+                                      }),
+                              ],
+                            ),
+                            Row(
+                              children: const [
+                                Text("Game Preferences",
+                                style: TextStyle(fontSize: 18),),
+                              ],
+                            ),
+                            Container(
+                              padding: const EdgeInsets.fromLTRB(30, 0, 0, 0),
+                              child: Column(
+                                children: [
+                                  //aqui hacer un for, preguntar al ignasi hehe :P
+                                  Row(
+                                    children: [
+                                      //button
+                                      Checkbox(value: doc["a"],onChanged: (bool? value){
+                                        setState(() {
+                                          doc.update("a", (value) => !doc["a"]);
+                                          //isCheckedLol = value!;
+                                        });
+                                      }),
+                                      Text("League of Legends\n\n"),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Row(
+                              children: const [
+                                Text("Lenguages",
+                                style: TextStyle(fontSize: 18),),
+                              ],
+                            ),
+                            Container(
+                              padding: const EdgeInsets.fromLTRB(30, 0, 0, 0),
+                              child: Column(
+                                children: [
+                                  //aqui hacer un for, preguntar al ignasi hehe :P
+                                  Row(
+                                    children:[
+                                      //hace falta cambiar el bool en el firebase
+                                      Checkbox(value: doc["a"],onChanged: (bool? value){
+                                        setState(() {
+                                          doc["a"] = value!;
+                                        });
+                                      }),
+                                      Text("SPANIIIIISH\n"),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                      )
+                      ],
+                    ),
                   ),
                 ],
               ),
