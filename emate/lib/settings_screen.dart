@@ -50,11 +50,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
           }
           final doc = snapshot.data!.data();
           if (doc != null) {
+          List<dynamic> games = doc['Games'];
+          List<dynamic> languages = doc['Languages'];
             return Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 mainAxisSize: MainAxisSize.max,
                 children: [
+                  const SizedBox(height: 20,),
                   Row(
                     children: [
                       GestureDetector(
@@ -138,7 +141,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   const Text(
-                                    "Show other Game Preferences \non serarh\n",
+                                    "Show other Game Preferences \non search\n",
                                     style: TextStyle(fontSize: 18),
                                   ),
                                   Switch(
@@ -153,7 +156,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               Row(
                                 children: const [
                                   Text(
-                                    "Game Preferences",
+                                    "Languages",
                                     style: TextStyle(fontSize: 18),
                                   ),
                                 ],
@@ -162,28 +165,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 padding: const EdgeInsets.fromLTRB(30, 0, 0, 0),
                                 child: Column(
                                   children: [
+                                    for(var j = 0;j<languages.length;j++)
                                     Row(
                                       children: [
-                                        Checkbox(
-                                            value: doc["a"],
-                                            onChanged: (bool? value) {
-                                              setState(() {
-                                                db
-                                                    .doc(
-                                                        "/user1/GdZ30bm3hotRFyDU7GSZ")
-                                                    .update({"a": !doc["a"]});
-                                              });
-                                            }),
-                                        const Text("League of Legends\n\n"),
+                                        Text(languages[j].toString()),
                                       ],
                                     ),
                                   ],
                                 ),
                               ),
-                              Row(
+                               Row(
                                 children: const [
                                   Text(
-                                    "Lenguages",
+                                    "Game",
                                     style: TextStyle(fontSize: 18),
                                   ),
                                 ],
@@ -192,25 +186,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 padding: const EdgeInsets.fromLTRB(30, 0, 0, 0),
                                 child: Column(
                                   children: [
-                                    //aqui hacer un for, preguntar al ignasi hehe :P
+                                    for(var i = 0;i<games.length;i++)
                                     Row(
                                       children: [
-                                        Checkbox(
-                                            value: doc["b"],
-                                            onChanged: (bool? value) {
-                                              setState(() {
-                                                db
-                                                    .doc(
-                                                        "/user1/GdZ30bm3hotRFyDU7GSZ")
-                                                    .update({"b": !doc["b"]});
-                                              });
-                                            }),
-                                        const Text("SPANIIIIISH\n"),
+                                        Text(games[i].toString()),
                                       ],
                                     ),
                                   ],
                                 ),
-                              )
+                              ),
                             ],
                           ),
                         )
