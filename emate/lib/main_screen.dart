@@ -111,17 +111,22 @@ class _MainScreen extends State<MainScreen> {
                     ),
                   ),
                   GestureDetector(
-                    /*
-                    Pseudocode
-                      doc['connected'] = !doc['connected'];
-                    */
                     onTap: () {
-                        doc.update('connected', (value) => !doc['connected']); // -> value es nulo, no lo cambias en ningun momento. (posiblemente)
+                      if (doc['connected'] == true) {
+                        db
+                            .doc("/user1/GdZ30bm3hotRFyDU7GSZ")
+                            .update({'connected': false});
+                      }
+                      if (doc['connected'] == false) {
+                        db
+                            .doc("/user1/GdZ30bm3hotRFyDU7GSZ")
+                            .update({'connected': true});
+                      }
                     },
                     child: ClickableIcon(
                       icon: doc['connected']
-                          ? Icons.remove_red_eye_sharp
-                          : Icons.remove_red_eye_outlined,
+                          ? Icons.remove_red_eye_outlined
+                          : Icons.remove_red_eye_sharp,
                       size: 80,
                       shapeColor: Colors.white10,
                       iconColor: doc['connected'] ? Colors.green : Colors.red,
