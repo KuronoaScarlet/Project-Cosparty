@@ -1,7 +1,6 @@
-import 'package:emate/users_name.dart';
+import 'package:emate/widgets/auth_gate.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,11 +13,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String fakeUserID = "oo2FO2sdS0ar0vNq2L53";
-    return MaterialApp(
-      home: UsersName(
-        userID: fakeUserID,
-      ),
+    return const MaterialApp(
+      home: AuthGate(),
     );
   }
 }

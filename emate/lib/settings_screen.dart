@@ -1,4 +1,6 @@
 import 'package:emate/profile_screen.dart';
+import 'package:emate/widgets/auth_gate.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:emate/widgets/clickable_icon.dart';
 
@@ -61,6 +63,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     height: 20,
                   ),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       GestureDetector(
                         onTap: () {
@@ -74,15 +77,28 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         },
                         child: const ClickableIcon(
                           icon: Icons.arrow_back,
-                          size: 35,
+                          size: 32,
                           shapeColor: Colors.white10,
                           iconColor: Colors.grey,
                         ),
                       ),
                       const Text(
-                        "                     E-Mate",
+                        "E-Mate",
                         style: TextStyle(fontSize: 20),
                       ),
+                      IconButton(
+                        icon: const Icon(
+                          Icons.logout,
+                        ),
+                        onPressed: () {
+                          FirebaseAuth.instance.signOut();
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => const AuthGate(),
+                            ),
+                          );
+                        },
+                      )
                     ],
                   ),
                   Container(
@@ -109,7 +125,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   const Text(
-                                    "Show lenguage",
+                                    "Show languages",
                                     style: TextStyle(fontSize: 18),
                                   ),
                                   Switch(
@@ -126,7 +142,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   const Text(
-                                    "Show winrate",
+                                    "Show WinRate",
                                     style: TextStyle(fontSize: 18),
                                   ),
                                   Switch(
@@ -171,6 +187,22 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                       Row(
                                         children: [
                                           Text(languages[j].toString()),
+                                          IconButton(
+                                            onPressed: () => showDialog<String>(
+                                              context: context,
+                                              builder: (BuildContext context) =>
+                                                  PopUp(
+                                                array: languages,
+                                                iter: j,
+                                                db: db,
+                                                widget: widget,
+                                                nameArray: "Languages",
+                                              ),
+                                            ),
+                                            icon: const Icon(Icons.delete,
+                                                size: 20,
+                                                color: Colors.black87),
+                                          ),
                                         ],
                                       ),
                                   ],
@@ -179,7 +211,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               Row(
                                 children: const [
                                   Text(
-                                    "Game",
+                                    "Games",
                                     style: TextStyle(fontSize: 18),
                                   ),
                                 ],
@@ -192,6 +224,22 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                       Row(
                                         children: [
                                           Text(games[i].toString()),
+                                          IconButton(
+                                            onPressed: () => showDialog<String>(
+                                              context: context,
+                                              builder: (BuildContext context) =>
+                                                  PopUp(
+                                                array: games,
+                                                iter: i,
+                                                db: db,
+                                                widget: widget,
+                                                nameArray: "Games",
+                                              ),
+                                            ),
+                                            icon: const Icon(Icons.delete,
+                                                size: 20,
+                                                color: Colors.black87),
+                                          ),
                                         ],
                                       ),
                                   ],
@@ -218,6 +266,43 @@ class _SettingsScreenState extends State<SettingsScreen> {
           }
         },
       ),
+    );
+  }
+}
+
+class PopUp extends StatelessWidget {
+  const PopUp({
+    Key? key,
+    required this.array,
+    required this.iter,
+    required this.db,
+    required this.widget,
+    required this.nameArray,
+  }) : super(key: key);
+
+  final List array;
+  final int iter;
+  final FirebaseFirestore db;
+  final SettingsScreen widget;
+  final String nameArray;
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Text('Delete ${array[iter]} from your profile?'),
+      actions: <Widget>[
+        TextButton(
+          onPressed: () => Navigator.pop(context, 'Cancel'),
+          child: const Text('Cancel'),
+        ),
+        TextButton(
+          onPressed: () {
+            array.removeAt(iter);
+            db.doc("/users/${widget.userID}").update({nameArray: array});
+            Navigator.pop(context, 'OK');
+          },
+          child: const Text('OK'),
+        ),
+      ],
     );
   }
 }

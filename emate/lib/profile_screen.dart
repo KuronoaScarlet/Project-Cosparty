@@ -1,5 +1,6 @@
 import 'package:emate/main_screen.dart';
 import 'package:emate/settings_screen.dart';
+import 'package:emate/widgets/add_button.dart';
 import 'package:flutter/material.dart';
 import 'package:emate/widgets/clickable_icon.dart';
 
@@ -51,137 +52,167 @@ class _ProfileScreenState extends State<ProfileScreen> {
             List<dynamic> games = doc['Games'];
             List<dynamic> languages = doc['Languages'];
             return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Row(
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => MainScreen(
-                                userID: widget.userID,
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Row(
+                      children: [
+                        IconButton(
+                          onPressed: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => MainScreen(
+                                  userID: widget.userID,
+                                ),
                               ),
-                            ),
-                          );
-                        },
-                        child: const ClickableIcon(
-                          icon: Icons.arrow_back,
-                          size: 35,
-                          shapeColor: Colors.white10,
-                          iconColor: Colors.grey,
-                        ),
-                      ),
-                      const Text(
-                        "                     E-Mate",
-                        style: TextStyle(fontSize: 20),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text(
-                        "    Profile Screen",
-                        style: TextStyle(fontSize: 20),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => SettingsScreen(
-                                userID: widget.userID,
-                              ),
-                            ),
-                          );
-                        },
-                        child: const ClickableIcon(
-                          icon: Icons.settings,
-                          size: 35,
-                          shapeColor: Colors.white10,
-                          iconColor: Colors.grey,
-                        ),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      const ClickableIcon(
-                        icon: Icons.person,
-                        size: 175,
-                        shapeColor: Colors.grey,
-                        iconColor: Colors.white,
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Text(
-                        doc["UserName"],
-                        style: const TextStyle(fontSize: 35),
-                      )
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      Row(
-                        children: [
-                          const Text(
-                            "    Languages",
-                            style: TextStyle(fontSize: 20),
+                            );
+                          },
+                          icon: Icon(
+                            Icons.arrow_back,
+                            size: 35,
+                            color: Colors.grey.shade500,
                           ),
-                          Row(
-                            children: const [],
-                          )
-                        ],
-                      ),
-                      Container(
-                        padding: const EdgeInsets.fromLTRB(30, 0, 0, 0),
-                        child: Column(
-                          children: [
-                            for (var j = 0; j < languages.length; j++)
-                              Row(
-                                children: [
-                                  Text(languages[j].toString()),
-                                ],
-                              ),
-                          ],
                         ),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      Row(
-                        children: [
-                          const Text(
-                            "    Games",
-                            style: TextStyle(fontSize: 20),
-                          )
-                        ],
-                      ),
-                      Container(
-                        padding: const EdgeInsets.fromLTRB(30, 0, 0, 0),
-                        child: Column(
-                          children: [
-                            for (var i = 0; i < games.length; i++)
-                              Row(
-                                children: [
-                                  Text(games[i].toString()),
-                                ],
-                              ),
-                          ],
+                        const Text(
+                          "                       E-Mate",
+                          style: TextStyle(fontSize: 20),
                         ),
-                      ),
-                    ],
-                  ),
-                ],
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(
+                          "Profile Screen",
+                          style: TextStyle(fontSize: 20),
+                        ),
+                        IconButton(
+                          onPressed: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => SettingsScreen(
+                                  userID: widget.userID,
+                                ),
+                              ),
+                            );
+                          },
+                          icon: Icon(
+                            Icons.settings,
+                            size: 35,
+                            color: Colors.grey.shade500,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        const ClickableIcon(
+                          icon: Icons.person,
+                          size: 175,
+                          shapeColor: Colors.grey,
+                          iconColor: Colors.white,
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              doc["UserName"],
+                              style: const TextStyle(fontSize: 35),
+                            ),
+                            IconButton(
+                              onPressed: () => showDialog<String>(
+                                context: context,
+                                builder: (BuildContext context) => AlertDialog(
+                                  title: const Text(
+                                      'Change your profile user name!'),
+                                  actions: <Widget>[
+                                    TextField(
+                                      controller: controller,
+                                    ),
+                                    Row(
+                                      children: [
+                                        TextButton(
+                                          onPressed: () =>
+                                              Navigator.pop(context, 'Cancel'),
+                                          child: const Text('Cancel'),
+                                        ),
+                                        TextButton(
+                                          onPressed: () {
+                                            db
+                                                .doc("/users/${widget.userID}")
+                                                .update({
+                                              'UserName': controller.text
+                                            });
+                                            if (controller.text.isNotEmpty) {
+                                              controller.clear();
+                                            }
+                                            Navigator.pop(context, 'OK');
+                                          },
+                                          child: const Text('OK'),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              icon: const Icon(Icons.edit,
+                                  size: 20, color: Colors.black87),
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          "Languages",
+                          style: TextStyle(fontSize: 20),
+                          textAlign: TextAlign.left,
+                        ),
+                        SectionElements(array: languages),
+                        AddButton(
+                          controller: controller,
+                          array: languages,
+                          db: db,
+                          widget: widget,
+                          buttonText: "Add Language",
+                          messageText: "Add a new language to your profile",
+                          arrayName: "Languages",
+                        ),
+                      ],
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          "Games",
+                          style: TextStyle(fontSize: 20),
+                        ),
+                        SectionElements(array: games),
+                        AddButton(
+                          controller: controller,
+                          array: games,
+                          db: db,
+                          widget: widget,
+                          buttonText: "Add Game",
+                          messageText: "Add a new game to your profile",
+                          arrayName: "Games",
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             );
           } else {
@@ -195,6 +226,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
             );
           }
         },
+      ),
+    );
+  }
+}
+
+class SectionElements extends StatelessWidget {
+  final List array;
+  const SectionElements({Key? key, required this.array}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 5),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          for (var i = 0; i < array.length; i++)
+            Text(
+              array[i].toString(),
+            ),
+        ],
       ),
     );
   }

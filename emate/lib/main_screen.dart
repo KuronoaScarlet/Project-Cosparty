@@ -1,3 +1,5 @@
+import 'package:emate/widgets/auth_gate.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:emate/profile_screen.dart';
@@ -58,7 +60,7 @@ class _MainScreen extends State<MainScreen> {
                 children: [
                   const Text(
                     "E-Mate",
-                    style: TextStyle(fontSize: 20),
+                    style: TextStyle(fontSize: 35),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -136,13 +138,43 @@ class _MainScreen extends State<MainScreen> {
               ),
             );
           } else {
-            return const Center(
-              child: Text(
-                "doc id null",
-                style: TextStyle(
-                  color: Colors.red,
+            final user = FirebaseAuth.instance.currentUser!;
+            List<String> games = [];
+            List<String> languages = [];
+            db
+                .collection("/users")
+                .add({
+                  "UserName": "E-Mate#${user.uid}",
+                  "connected": true,
+                  "Games": games,
+                  "Languages": languages,
+                })
+                .then((_) {})
+                .catchError((_) {});
+            return Column(
+              children: [
+                const Center(
+                  child: Text(
+                    "doc id null",
+                    style: TextStyle(
+                      color: Colors.red,
+                    ),
+                  ),
                 ),
-              ),
+                IconButton(
+                  icon: const Icon(
+                    Icons.logout,
+                  ),
+                  onPressed: () {
+                    FirebaseAuth.instance.signOut();
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => const AuthGate(),
+                      ),
+                    );
+                  },
+                )
+              ],
             );
           }
         },
