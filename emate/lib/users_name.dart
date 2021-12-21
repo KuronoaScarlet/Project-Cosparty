@@ -17,7 +17,6 @@ class UsersName extends StatefulWidget {
 class _UsersName extends State<UsersName> {
   final db = FirebaseFirestore.instance;
   late TextEditingController controller;
-  
 
   @override
   void initState() {
@@ -52,7 +51,9 @@ class _UsersName extends State<UsersName> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                  const SizedBox(height: 50,),
+                  const SizedBox(
+                    height: 50,
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: const [
@@ -62,13 +63,13 @@ class _UsersName extends State<UsersName> {
                       ),
                     ],
                   ),
-                 TextField(
-              controller: controller,
-            ),
-            ElevatedButton(
-              child: const Text("login (fake)"),
-              onPressed: () {
-                /*db.collection("/users").add({
+                  TextField(
+                    controller: controller,
+                  ),
+                  ElevatedButton(
+                    child: const Text("login (fake)"),
+                    onPressed: () {
+                      /*db.collection("/users").add({
                     "UserName":controller.text, //your data which will be added to the collection and collection will be created after this
                     "connected":true, //your data which will be added to the collection and collection will be created after this
                     }).then((_){
@@ -76,17 +77,17 @@ class _UsersName extends State<UsersName> {
                     }).catchError((_){
                       print("an error occured");
                     });*/
-                   db
-                      .doc("/users/${widget.userID}")
-                      .update({'UserName': controller.text});
-                  String fakeUserID = "oo2FO2sdS0ar0vNq2L53";
-                Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(
-                    builder: (_) => MainScreen(userID: fakeUserID),
-                  ),
-                );
-              },
-            )
+                      db
+                          .doc("/users/${widget.userID}")
+                          .update({'UserName': controller.text});
+                      String fakeUserID = "oo2FO2sdS0ar0vNq2L53";
+                      Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(
+                          builder: (_) => MainScreen(userID: fakeUserID),
+                        ),
+                      );
+                    },
+                  )
                 ],
               ),
             );

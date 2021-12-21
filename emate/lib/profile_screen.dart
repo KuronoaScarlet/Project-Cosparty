@@ -48,11 +48,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
           }
           final doc = snapshot.data!.data();
           if (doc != null) {
+            List<dynamic> games = doc['Games'];
+            List<dynamic> languages = doc['Languages'];
             return Center(
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.start,
                 mainAxisSize: MainAxisSize.max,
                 children: [
+                  const SizedBox(
+                    height: 20,
+                  ),
                   Row(
                     children: [
                       GestureDetector(
@@ -135,7 +140,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             children: const [],
                           )
                         ],
-                      )
+                      ),
+                      Container(
+                        padding: const EdgeInsets.fromLTRB(30, 0, 0, 0),
+                        child: Column(
+                          children: [
+                            for (var j = 0; j < languages.length; j++)
+                              Row(
+                                children: [
+                                  Text(languages[j].toString()),
+                                ],
+                              ),
+                          ],
+                        ),
+                      ),
                     ],
                   ),
                   Column(
@@ -145,12 +163,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           const Text(
                             "    Games",
                             style: TextStyle(fontSize: 20),
-                          ),
-                          Row(
-                            children: const [],
                           )
                         ],
-                      )
+                      ),
+                      Container(
+                        padding: const EdgeInsets.fromLTRB(30, 0, 0, 0),
+                        child: Column(
+                          children: [
+                            for (var i = 0; i < games.length; i++)
+                              Row(
+                                children: [
+                                  Text(games[i].toString()),
+                                ],
+                              ),
+                          ],
+                        ),
+                      ),
                     ],
                   ),
                 ],

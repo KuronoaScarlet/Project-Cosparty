@@ -50,14 +50,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
           }
           final doc = snapshot.data!.data();
           if (doc != null) {
-          List<dynamic> games = doc['Games'];
-          List<dynamic> languages = doc['Languages'];
+            List<dynamic> games = doc['Games'];
+            List<dynamic> languages = doc['Languages'];
             return Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                  const SizedBox(height: 20,),
+                  const SizedBox(
+                    height: 20,
+                  ),
                   Row(
                     children: [
                       GestureDetector(
@@ -165,16 +167,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 padding: const EdgeInsets.fromLTRB(30, 0, 0, 0),
                                 child: Column(
                                   children: [
-                                    for(var j = 0;j<languages.length;j++)
-                                    Row(
-                                      children: [
-                                        Text(languages[j].toString()),
-                                      ],
-                                    ),
+                                    for (var j = 0; j < languages.length; j++)
+                                      Row(
+                                        children: [
+                                          Text(languages[j].toString()),
+                                        ],
+                                      ),
                                   ],
                                 ),
                               ),
-                               Row(
+                              Row(
                                 children: const [
                                   Text(
                                     "Game",
@@ -186,12 +188,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 padding: const EdgeInsets.fromLTRB(30, 0, 0, 0),
                                 child: Column(
                                   children: [
-                                    for(var i = 0;i<games.length;i++)
-                                    Row(
-                                      children: [
-                                        Text(games[i].toString()),
-                                      ],
-                                    ),
+                                    for (var i = 0; i < games.length; i++)
+                                      Row(
+                                        children: [
+                                          Text(games[i].toString()),
+                                        ],
+                                      ),
                                   ],
                                 ),
                               ),
