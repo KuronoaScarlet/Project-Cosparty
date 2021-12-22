@@ -62,6 +62,10 @@ class _MainScreen extends State<MainScreen> {
                     "E-Mate",
                     style: TextStyle(fontSize: 35),
                   ),
+                  Text(
+                    "Hi ${doc['UserName']}!",
+                    style: const TextStyle(fontSize: 20),
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     mainAxisSize: MainAxisSize.max,
