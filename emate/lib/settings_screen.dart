@@ -20,7 +20,7 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen> {
   final db = FirebaseFirestore.instance;
   late TextEditingController controller;
-  bool isCheckedLeng = false;
+  bool isCheckedLang = false;
   bool isCheckedWinrate = false;
   bool isCheckedPreferences = false;
 
@@ -101,49 +101,41 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       )
                     ],
                   ),
-                  Container(
+                  Padding(
                     padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: const [
-                            Text(
-                              "Settings\n",
-                              style: TextStyle(fontSize: 20),
-                            ),
-                          ],
+                        const Text(
+                          "Settings\n",
+                          style: TextStyle(fontSize: 20),
                         ),
-                        Container(
-                          padding: const EdgeInsets.fromLTRB(35, 0, 0, 0),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
                           child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            mainAxisSize: MainAxisSize.max,
                             children: [
                               Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   const Text(
                                     "Show languages",
-                                    style: TextStyle(fontSize: 18),
+                                    style: TextStyle(fontSize: 15),
                                   ),
                                   Switch(
-                                      value: isCheckedLeng,
+                                      value: isCheckedLang,
                                       onChanged: (bool? value) {
                                         setState(() {
-                                          isCheckedLeng = value!;
+                                          isCheckedLang = value!;
                                         });
                                       }),
                                 ],
                               ),
                               Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   const Text(
                                     "Show WinRate",
-                                    style: TextStyle(fontSize: 18),
+                                    style: TextStyle(fontSize: 15),
                                   ),
                                   Switch(
                                       value: isCheckedWinrate,
@@ -155,12 +147,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 ],
                               ),
                               Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   const Text(
                                     "Show other Game Preferences \non search\n",
-                                    style: TextStyle(fontSize: 18),
+                                    style: TextStyle(fontSize: 15),
                                   ),
                                   Switch(
                                       value: isCheckedPreferences,
@@ -179,8 +170,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   ),
                                 ],
                               ),
-                              Container(
-                                padding: const EdgeInsets.fromLTRB(30, 0, 0, 0),
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
                                 child: Column(
                                   children: [
                                     for (var j = 0; j < languages.length; j++)
@@ -216,8 +207,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   ),
                                 ],
                               ),
-                              Container(
-                                padding: const EdgeInsets.fromLTRB(30, 0, 0, 0),
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
                                 child: Column(
                                   children: [
                                     for (var i = 0; i < games.length; i++)

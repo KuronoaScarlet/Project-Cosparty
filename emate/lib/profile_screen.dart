@@ -55,9 +55,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
               child: ListView(
-                // mainAxisAlignment: MainAxisAlignment.start,
-                // crossAxisAlignment: CrossAxisAlignment.start,
-                // mainAxisSize: MainAxisSize.max,
                 children: [
                   Row(
                     children: [

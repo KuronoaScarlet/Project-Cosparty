@@ -48,9 +48,12 @@ class _InboxScreenState extends State<InboxScreen> {
           if (doc != null) {
             return Center(
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.start,
                 mainAxisSize: MainAxisSize.max,
                 children: [
+                  const SizedBox(
+                    height: 20,
+                  ),
                   Row(
                     children: [
                       GestureDetector(
