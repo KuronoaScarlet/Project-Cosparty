@@ -142,9 +142,9 @@ class _MainScreen extends State<MainScreen> {
             List<String> games = [];
             List<String> languages = [];
             db
-                .collection("/users")
-                .add({
-                  "UserName": "E-Mate#${user.uid}",
+                .doc("/users/${FirebaseAuth.instance.currentUser!.uid}")
+                .set({
+                  "UserName": "E-Mate#Newuser",
                   "connected": true,
                   "Games": games,
                   "Languages": languages,
