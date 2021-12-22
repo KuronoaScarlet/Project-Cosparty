@@ -138,7 +138,6 @@ class _MainScreen extends State<MainScreen> {
               ),
             );
           } else {
-            final user = FirebaseAuth.instance.currentUser!;
             List<String> games = [];
             List<String> languages = [];
             db
