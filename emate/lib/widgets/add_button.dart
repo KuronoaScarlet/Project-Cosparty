@@ -72,48 +72,62 @@ class _AddButtonState extends State<AddButton> {
       "Smash Bros",
       "Valorant"
     ];
+    String temp = "";
 
     return TextButton(
       onPressed: () => showDialog<String>(
         context: context,
-        builder: (BuildContext context) => AlertDialog(
-          title: Text(widget.messageText),
-          actions: [
-            DropdownButton(
-              items: (widget.changer)
-                  ? l
-                      .map((e) => DropdownMenuItem(child: Text(e), value: e))
-                      .toList()
-                  : g
-                      .map((e) => DropdownMenuItem(child: Text(e), value: e))
-                      .toList(),
-              onChanged: (value) {
-                setState(() {
-                  controller.text = value.toString();
-                });
-              },
-              hint: Text(controller.text),
-              isDense: true,
-              isExpanded: true,
-              itemHeight: null,
-            ),
-            ElevatedButton(
-              onPressed: () {
-                widget.array.add(controller.text);
-                widget.db
-                    .doc("/users/${widget.widget.userID}")
-                    .update({widget.arrayName: widget.array});
-                if (controller.text.isNotEmpty) {
-                  controller.clear();
-                }
-                Navigator.of(context).pop();
-              },
-              child: const Text("Add"),
-            ),
-          ],
-        ),
+        builder: (context) {
+          return StatefulBuilder(
+            builder: (context, setState) {
+              return AlertDialog(
+                title: Text(widget.messageText),
+                actions: <Widget>[
+                  DropdownButton(
+                    items: (widget.changer)
+                        ? l
+                            .map((e) =>
+                                DropdownMenuItem(child: Text(e), value: e))
+                            .toList()
+                        : g
+                            .map((e) =>
+                                DropdownMenuItem(child: Text(e), value: e))
+                            .toList(),
+                    onChanged: (value) {
+                      setState(
+                        () {
+                          temp = value.toString();
+                        },
+                      );
+                    },
+                    hint: Text(temp),
+                    isDense: true,
+                    isExpanded: true,
+                    itemHeight: null,
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      widget.array.add(temp);
+                      widget.db
+                          .doc("/users/${widget.widget.userID}")
+                          .update({widget.arrayName: widget.array});
+                      if (controller.text.isNotEmpty) {
+                        controller.clear();
+                      }
+                      Navigator.of(context).pop();
+                    },
+                    child: const Text("Add"),
+                  ),
+                ],
+              );
+            },
+          );
+        },
       ),
       child: Text(widget.buttonText),
     );
   }
 }
+
+
+/**/
