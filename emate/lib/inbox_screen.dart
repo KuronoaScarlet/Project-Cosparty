@@ -47,9 +47,7 @@ class _InboxScreenState extends State<InboxScreen> {
           final doc = snapshot.data!.data();
           if (doc != null) {
             return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                mainAxisSize: MainAxisSize.max,
+              child: ListView(
                 children: [
                   const SizedBox(
                     height: 20,
