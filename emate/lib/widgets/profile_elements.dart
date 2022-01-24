@@ -18,7 +18,7 @@ class ProfileElements extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(4.0),
               child: Container(
-                width: 70,
+                width: 80,
                 decoration: BoxDecoration(
                     color: Colors.grey.shade300,
                     borderRadius: const BorderRadius.all(Radius.circular(10))),
