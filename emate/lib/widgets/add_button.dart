@@ -29,18 +29,6 @@ class AddButton extends StatefulWidget {
 }
 
 class _AddButtonState extends State<AddButton> {
-  late TextEditingController controller;
-  @override
-  void initState() {
-    controller = TextEditingController(text: "");
-  }
-
-  @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     List<String> l = [
@@ -63,7 +51,7 @@ class _AddButtonState extends State<AddButton> {
       "Epic Seven",
       "Fortnite",
       "Genshin Impact",
-      "Heartstone",
+      "Hearthstone",
       "League of Legends",
       "Minecraft",
       "Osu!",
@@ -72,7 +60,7 @@ class _AddButtonState extends State<AddButton> {
       "Smash Bros",
       "Valorant"
     ];
-    String temp = "";
+    String temp = (widget.changer) ? "Spanish" : "Apex Legends";
 
     return TextButton(
       onPressed: () => showDialog<String>(
@@ -111,9 +99,6 @@ class _AddButtonState extends State<AddButton> {
                       widget.db
                           .doc("/users/${widget.widget.userID}")
                           .update({widget.arrayName: widget.array});
-                      if (controller.text.isNotEmpty) {
-                        controller.clear();
-                      }
                       Navigator.of(context).pop();
                     },
                     child: const Text("Add"),
