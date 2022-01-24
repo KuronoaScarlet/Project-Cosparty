@@ -117,7 +117,7 @@ class UserBox extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 3),
       child: Expanded(
           child: Container(
-        decoration: BoxDecoration(
+          decoration: BoxDecoration(
           color: Colors.grey.shade300,
           borderRadius: const BorderRadius.all(Radius.circular(20)),
           border: Border.all(

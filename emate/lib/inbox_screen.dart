@@ -34,67 +34,123 @@ class _InboxScreenState extends State<InboxScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: StreamBuilder(
-        stream: db.doc("/users/${widget.userID}").snapshots(),
+        stream: db.collection("users").snapshots(),
         builder: (
           BuildContext context,
-          AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>> snapshot,
+          AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot,
         ) {
           if (!snapshot.hasData) {
             return const Center(
               child: CircularProgressIndicator(),
             );
-          }
-          final doc = snapshot.data!.data();
-          if (doc != null) {
-            return Center(
-              child: ListView(
-                children: [
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Row(
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => MainScreen(
-                                userID: widget.userID,
-                              ),
-                            ),
-                          );
-                        },
-                        child: const ClickableIcon(
-                          icon: Icons.arrow_back,
-                          size: 35,
-                          shapeColor: Colors.white10,
-                          iconColor: Colors.grey,
-                        ),
-                      ),
-                      const Text(
-                        "                     E-Mate",
-                        style: TextStyle(fontSize: 20),
-                      ),
-                    ],
-                  ),
-                  const Text(
-                    "Inbox Screen",
-                    style: TextStyle(fontSize: 20),
-                  ),
-                ],
-              ),
-            );
           } else {
-            return const Center(
-              child: Text(
-                "doc id null",
-                style: TextStyle(
-                  color: Colors.red,
+            return Column(
+              children: [
+                const SizedBox(
+                  height: 30,
                 ),
-              ),
-            );
+                Row(
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => MainScreen(
+                              userID: widget.userID,
+                            ),
+                          ),
+                        );
+                      },
+                      icon: Icon(
+                        Icons.arrow_back,
+                        size: 35,
+                        color: Colors.grey.shade500,
+                      ),
+                    ),
+                    const Text(
+                      "                       E-Mate",
+                      style: TextStyle(fontSize: 20),
+                    ),
+                  ],
+                ),
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: snapshot.data!.size,
+                      itemBuilder: (BuildContext context, int index) {
+                        if (widget.userID !=
+                                snapshot.data!.docs.elementAt(index).id &&
+                            snapshot.data!.docs.elementAt(index)["connected"] ==
+                                true) {
+                          return MessageBox(
+                              doc: snapshot.data!.docs.elementAt(index));
+                        } else {
+                          return const SizedBox(
+                            height: 0,
+                          );
+                        }
+                      },
+                    ),
+                  )
+                ],
+              );
           }
         },
+      ),
+    );
+  }
+}
+
+class MessageBox extends StatelessWidget {
+  final doc;
+  const MessageBox({
+    Key? key,
+    required this.doc,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(2.0),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.grey.shade300,
+          borderRadius: const BorderRadius.all(Radius.circular(20)),
+          border: Border.all(
+            color: Colors.black,
+            width: 2,
+          ),
+        ),
+        child: Row(
+          children: [
+            const ClickableIcon(
+              icon: Icons.person,
+              size: 35,
+              shapeColor: Colors.grey,
+              iconColor: Colors.white,
+            ),
+            const SizedBox(
+              width: 10,
+            ),
+            Text(
+              "${doc["UserName"]} wants to be your friend!",
+              style: const TextStyle(fontSize: 13),
+            ),
+            const Spacer(),
+            ClickableIcon(
+
+              icon: Icons.person_add,
+              size: 15,
+              shapeColor: Colors.grey.shade300,
+              iconColor: Colors.black,
+            ),
+           ClickableIcon(
+              icon: Icons.person_remove,
+              size: 15,
+              shapeColor: Colors.grey.shade300,
+              iconColor: Colors.black,
+            ),
+          ],
+        ),
       ),
     );
   }
