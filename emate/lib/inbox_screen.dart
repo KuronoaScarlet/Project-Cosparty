@@ -73,26 +73,26 @@ class _InboxScreenState extends State<InboxScreen> {
                     ),
                   ],
                 ),
-                  Expanded(
-                    child: ListView.builder(
-                      itemCount: snapshot.data!.size,
-                      itemBuilder: (BuildContext context, int index) {
-                        if (widget.userID !=
-                                snapshot.data!.docs.elementAt(index).id &&
-                            snapshot.data!.docs.elementAt(index)["connected"] ==
-                                true) {
-                          return MessageBox(
-                              doc: snapshot.data!.docs.elementAt(index));
-                        } else {
-                          return const SizedBox(
-                            height: 0,
-                          );
-                        }
-                      },
-                    ),
-                  )
-                ],
-              );
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: snapshot.data!.size,
+                    itemBuilder: (BuildContext context, int index) {
+                      if (widget.userID !=
+                              snapshot.data!.docs.elementAt(index).id &&
+                          snapshot.data!.docs.elementAt(index)["connected"] ==
+                              true) {
+                        return MessageBox(
+                            doc: snapshot.data!.docs.elementAt(index));
+                      } else {
+                        return const SizedBox(
+                          height: 0,
+                        );
+                      }
+                    },
+                  ),
+                )
+              ],
+            );
           }
         },
       ),
@@ -120,36 +120,34 @@ class MessageBox extends StatelessWidget {
             width: 2,
           ),
         ),
-        child: Row(
-          children: [
-            const ClickableIcon(
-              icon: Icons.person,
-              size: 35,
-              shapeColor: Colors.grey,
-              iconColor: Colors.white,
-            ),
-            const SizedBox(
-              width: 10,
-            ),
-            Text(
-              "${doc["UserName"]} wants to be your friend!",
-              style: const TextStyle(fontSize: 13),
-            ),
-            const Spacer(),
-            ClickableIcon(
-
-              icon: Icons.person_add,
-              size: 15,
-              shapeColor: Colors.grey.shade300,
-              iconColor: Colors.black,
-            ),
-           ClickableIcon(
-              icon: Icons.person_remove,
-              size: 15,
-              shapeColor: Colors.grey.shade300,
-              iconColor: Colors.black,
-            ),
-          ],
+        child: Padding(
+          padding: const EdgeInsets.all(4.0),
+          child: Row(
+            children: [
+              const ClickableIcon(
+                icon: Icons.person,
+                size: 35,
+                shapeColor: Colors.grey,
+                iconColor: Colors.white,
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+              Text(
+                "${doc["UserName"]} wants to be your friend!",
+                style: const TextStyle(fontSize: 13),
+              ),
+              const Spacer(),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                child: Icon(Icons.person_add),
+              ),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                child: Icon(Icons.person_remove),
+              ),
+            ],
+          ),
         ),
       ),
     );
