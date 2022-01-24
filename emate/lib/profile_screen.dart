@@ -3,6 +3,7 @@ import 'package:emate/settings_screen.dart';
 import 'package:emate/widgets/add_button.dart';
 import 'package:flutter/material.dart';
 import 'package:emate/widgets/clickable_icon.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -233,6 +234,7 @@ class SectionElements extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final fs = firebase_storage.FirebaseStorage.instance;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 5),
       child: Column(
@@ -240,8 +242,21 @@ class SectionElements extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           for (var i = 0; i < array.length; i++)
-            Text(
-              array[i].toString(),
+            Row(
+              children: [
+                FutureBuilder(
+                  future: fs.ref("LOL_Logo.png").getDownloadURL(),
+                  builder: (context, AsyncSnapshot<String> snapshot) {
+                    if (!snapshot.hasData) {
+                      return const CircularProgressIndicator();
+                    }
+                    return Image.network(snapshot.data!, width: 25,);
+                  },
+                ),
+                Text(
+                  array[i].toString(),
+                ),
+              ],
             ),
         ],
       ),
